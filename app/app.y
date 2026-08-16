@@ -1,7 +1,7 @@
-from flask import Flask, request, redirect, render_template
+from flask import Flask, redirect, render_template, request
 import mysql.connector
-import redis
 import os
+import redis
 
 
 app = Flask(__name__)
@@ -20,7 +20,7 @@ def get_db():
 redis_client = redis.Redis(
     host=os.getenv("REDIS_HOST", "redis"),
     port=int(os.getenv("REDIS_PORT", "6379")),
-    decode_responses=True,
+    decode_responses=True
 )
 
 
