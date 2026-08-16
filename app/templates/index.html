@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Docker To-Do App</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            max-width: 700px;
+            margin: 50px auto;
+        }
+
+        input {
+            padding: 10px;
+            width: 70%;
+        }
+
+        button {
+            padding: 10px;
+        }
+
+        li {
+            margin: 15px 0;
+        }
+
+        a {
+            margin-left: 20px;
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>Docker To-Do Application</h1>
+
+<form method="POST" action="/add">
+
+    <input
+        type="text"
+        name="title"
+        placeholder="Enter task"
+        required
+    >
+
+    <button type="submit">
+        Add
+    </button>
+
+</form>
+
+<ul>
+
+{% for todo in todos %}
+
+<li>
+    {{ todo.title }}
+
+    <a href="/delete/{{ todo.id }}">
+        Delete
+    </a>
+</li>
+
+{% endfor %}
+
+</ul>
+
+</body>
+</html>
