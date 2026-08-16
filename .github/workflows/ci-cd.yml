@@ -10,7 +10,7 @@ on:
 
 jobs:
   test:
-    name: Code Quality & Tests
+    name: Code Quality and Tests
     runs-on: ubuntu-latest
 
     steps:
@@ -26,10 +26,10 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+          pip install flake8 pytest
 
       - name: Code quality check
         run: |
-          pip install flake8
           flake8 app
 
       - name: Run tests
@@ -41,15 +41,21 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
 
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Log in to Docker Hub
+      - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Set up Docker
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/todo-app:v1.0
+            ${{ secrets.DOCKERHUB_USERNAME }}/todo-app:latest
