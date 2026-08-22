@@ -6,5 +6,5 @@ def test_app_exists():
 
 
 def test_index_route():
-    routes = [rule.rule for rule in app.url_map.iter_rules()]
+    routes = [str(rule) for rule in app.url_map.iter_rules()]
     assert "/" in routes
